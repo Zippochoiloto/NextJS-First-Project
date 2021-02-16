@@ -1,5 +1,13 @@
 import {NextApiRequest, NextApiResponse} from 'next'
+import { Person } from 'src/entity';
+const { Pool, Client } = require('pg')
+import {getConnection} from "typeorm";
 
-export default function getPeople(req: NextApiRequest, res: NextApiResponse) {
-    res.json([{name: 'test1'}, {name: 'test2'}])
+export default async function getPeople() {
+    const user = await getConnection()
+    .createQueryBuilder()
+    .select("*")
+    .from(Person, "user")
+    .getMany()
+      console.log('user', user)
 } 
